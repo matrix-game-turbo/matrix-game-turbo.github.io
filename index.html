@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="description" content="Matrix-Game-Turbo: Real-Time Interactive World Foundation Model" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Matrix-Game: Interactive World Foundation Model</title>
+
+  <!-- FONTS & STYLES -->
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="icon" href="static/images/logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  
+<section class="hero" style="background: url('static/imgs/matrixgame.png') no-repeat center center fixed; background-size: cover;">
+  <div class="hero-body has-text-centered" style="background-color: rgba(255,255,255,0.85);">
+    <h1 class="title is-1">Matrix-Game:<br>Interactive World Foundation Model</h1>
+  
+    <p>
+      <strong>Yifan Zhang</strong><sup>*</sup>&nbsp;
+      <strong>Chunli Peng</strong><sup>*</sup>&nbsp; 
+      <strong>Boyang Wang</strong><sup>*†</sup>&nbsp;
+      <strong>Puyi Wang</strong>&nbsp;
+      <strong>Qingcheng Zhu</strong>&nbsp;
+      <strong>Fei Kang</strong><br>
+      
+      <strong>Biao Jiang</strong>&nbsp;
+      <strong>Zedong Gao</strong>&nbsp; 
+      <strong>Eric Li</strong>&nbsp; 
+      <strong>Yang Liu</strong>&nbsp; 
+      <strong>Yahui Zhou</strong>
+    </p>
+    <p><em>Skywork AI</em></p>
+  
+    <p style="margin-top:1rem;">
+      <a href="https://arxiv.org/pdf/2506.18701" class="button is-dark is-small is-rounded">
+        <span class="icon"><i class="ai ai-arxiv"></i></span><span>Technical Report</span>
+      </a>
+      <a href="https://github.com/SkyworkAI/Matrix-Game" class="button is-dark is-small is-rounded">
+        <span class="icon"><i class="fab fa-github"></i></span><span>GitHub</span>
+      </a>
+      <a href="https://github.com/SkyworkAI/Matrix-Game/tree/main/GameWorldScore" class="button is-dark is-small is-rounded">
+        <span class="icon"><i class="fab fa-github"></i></span><span>Benchmark</span>
+      </a>
+      <a href="https://huggingface.co/Skywork/Matrix-Game" class="button is-dark is-small is-rounded">
+        <span class="icon">🤗</span><span>HuggingFace</span>
+      </a>
+      <a href="#" class="button is-dark is-small is-rounded">
+        <span class="icon">🚀</span><span>Dataset (Comming soon)</span>
+      </a>
+    </p>
+  </div>
+</section>
+<!-- ABSTRACT -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-2 has-text-centered">Abstract</h2>
+    
+    <!-- Abstract Text -->
+    <div class="content has-text-justified">
+      We introduce Matrix-Game, an interactive world foundation model for controllable game world generation. Matrix-Game is trained using a two-stage pipeline that first performs large-scale unlabeled pretraining for environment understanding, followed by action-labeled fine-tuning for interactive video generation. To support this, we curate Matrix-Game-MC, a comprehensive Minecraft dataset comprising over 2,700 hours of unlabeled gameplay video clips and over 1,000 hours of high-quality labeled clips with fine-grained keyboard and mouse action annotations. Our model adopts an controllable image-to-world generation paradigm, conditioned on a reference image, motion frames, and user actions. With over 17 billion parameters, Matrix-Game enables precise control over character actions and camera movements, while maintaining high visual quality and temporal coherence. To evaluate performance, we propose GameWorld Score, a unified benchmark measuring visual quality, temporal quality, action controllability, and physical rule understanding. Extensive experiments show that Matrix-Game consistently outperforms prior open-source Minecraft world models—including Oasis and MineWorld—across all metrics, with particularly strong gains in controllability and 3D consistency. Human evaluations further confirm these findings, highlighting the model’s ability to produce physically grounded and perceptually realistic interactive videos in diverse scenarios.
+    </div>
+
+    <!-- Video (placed directly below abstract text) -->
+    <div style="margin-top: 2rem;">
+      <video class="has-ratio" controls style="width: 100%; aspect-ratio: 16 / 9;">
+        <source src="static/videos/demo.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- Method -->
+<section class="section">
+
+    <!-- Human Evaluation -->
+
+    <div class="container is-max-desktop">
+
+    <h2 class="title is-2 has-text-centered">Model Overview</h2>
+    <div class="box mt-6"> 
+      <p><strong>Matrix-Game adopts an image-to-world generation paradigm, using a single reference image as the primary prior for world understanding and video generation. To enable long-duration video generation, Matrix-Game uses an autoregressive strategy  that preserves local temporal consistency across segments, enabling the model to maintain coherent dynamics over extended time horizons.</strong></p>
+      <div class="table-container">
+        <img src="static/imgs/architecture.png" alt="Matrix Game" style="width: 100%; height: auto;">
+      </div> 
+    </div>
+  </div>
+      
+</section>
+
+
+<!-- Benchmark -->
+<section class="section">
+
+  <!-- GameWorld Score Benchmark -->
+
+  <div class="container is-max-desktop"> 
+  <h2 class="title is-2 has-text-centered">GameWorld Score Benchmark</h2>
+  <div class="box mt-6"> 
+    <p><strong>To facilitate the evaluation and comparison of Minecraft world models, GameWorld Score is introduced as a unified benchmark that assesses not only the perceptual quality of generated videos but also their controllability and physical plausibility. The benchmark decomposes world model performance into eight distinct dimensions, each capturing a specific aspect of video generation.</strong></p>
+    <div class="table-container">
+      <img src="static/imgs/benchmark.png" alt="Matrix Game" style="width: 100%; height: auto;">
+    </div> 
+
+    <p><strong>Metric Descriptions</strong>:</p>
+    <ul>
+      <li><strong>Image Quality</strong> / <strong>Aesthetic Quality</strong>: Visual fidelity and perceptual appeal of generated frames</li>
+      <li><strong>Temporal Consistency</strong> / <strong>Motion Smoothness</strong>: Temporal coherence and smoothness between frames</li>
+      <li><strong>Keyboard Accuracy</strong> / <strong>Mouse Accuracy</strong>: Accuracy in following user control signals</li>
+      <li><strong>Object Consistency</strong>: Geometric stability and consistency of objects over time</li>
+      <li><strong>Scenario Consistency</strong>: Scenario consistency over time</li>
+    </ul>
+  </div>
+</div>
+    
+</section>
+
+<!-- Comparison -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-2 has-text-centered">Performance Comparison</h2>
+
+    <!-- GameWorld Score Benchmark -->
+    <div class="box">
+      <h3 class="title is-4">1. GameWorld Score Benchmark Comparison</h3>
+      <p><strong>Matrix-Game achieves consistently best performance on the GameWorld Score benchmark.</strong></p>
+      <div class="table-container">
+        <table class="table is-fullwidth is-hoverable">
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>Image Quality ↑</th>
+              <th>Aesthetic Quality↑</th>
+              <th>Temporal Cons. ↑</th>
+              <th>Motion Smooth. ↑</th>
+              <th>Keyboard Acc. ↑</th>
+              <th>Mouse Acc. ↑</th>
+              <th>Object Cons. ↑</th>
+              <th>Scenario Cons. ↑</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Oasis</td>
+              <td>0.65</td>
+              <td>0.48</td>
+              <td>0.94</td>
+              <td><span class="has-text-weight-bold">0.98</span></td>
+              <td>0.77</td>
+              <td>0.56</td>
+              <td>0.56</td>
+              <td>0.86</td>
+            </tr>
+            <tr>
+              <td>MineWorld</td>
+              <td>0.69</td>
+              <td>0.47</td>
+              <td>0.95</td>
+              <td><span class="has-text-weight-bold">0.98</span></td>
+              <td>0.86</td>
+              <td>0.64</td>
+              <td>0.51</td>
+              <td>0.92</td>
+            </tr>
+            <tr class="has-background-success-light">
+              <td><span class="has-text-weight-bold">Ours</span></td>
+              <td><span class="has-text-weight-bold">0.72</span></td>
+              <td><span class="has-text-weight-bold">0.49</span></td>
+              <td><span class="has-text-weight-bold">0.97</span></td>
+              <td><span class="has-text-weight-bold">0.98</span></td>
+              <td><span class="has-text-weight-bold">0.95</span></td>
+              <td><span class="has-text-weight-bold">0.95</span></td>
+              <td><span class="has-text-weight-bold">0.76</span></td>
+              <td><span class="has-text-weight-bold">0.93</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- Human Evaluation -->
+    <div class="box mt-6">
+      <h3 class="title is-4">2. Human Evaluation</h3>
+      <p><strong>A double-blind human evaluation demonstrates that Matrix-Game significantly outperforms Oasis and MineWorld in terms of overall quality, controllability, visual quality, and temporal consistency.</strong></p>
+      <div class="table-container">
+        <img src="static/imgs/human_win_rate.png" alt="Matrix Game" style="width: 100%; height: auto;">
+      </div>
+
+      <blockquote class="notification is-info">
+        Double-blind human evaluation by two independent groups across four key dimensions: 
+        <span class="has-text-weight-bold">Overall Quality</span>, 
+        <span class="has-text-weight-bold">Controllability</span>, 
+        <span class="has-text-weight-bold">Visual Quality</span>, and 
+        <span class="has-text-weight-bold">Temporal Consistency</span>.<br>
+        Scores represent the percentage of pairwise comparisons in which each method was preferred.
+        Matrix-Game consistently outperforms prior models across all metrics and both groups.
+      </blockquote>
+    </div>
+  </div>
+</section>
+  <!-- VIDEO DEMOS -->
+<section class="section">
+  <div class="container is-max-desktop has-text-centered">
+    <h2 class="title is-2">Generation across Diverse Minecraft Scenarios</h2>
+    <p class="subtitle has-text-left">Matrix-Game demonstrates strong generalization across eight diverse Minecraft environments with varying terrain and interaction dynamics.</p>
+    <div class="video-grid" id="videoContainer_scenario_generation"></div>
+  </div>
+</section>
+<section class="section">
+  <div class="container is-max-desktop has-text-centered">
+    <h2 class="title is-2">Generation with Keyboard Control</h2>
+    <p class="subtitle has-text-left">Matrix-Game can generate high-quality videos that precisely follow simple keyboard instructions—including directional movements (forward, backward, left, right), jump, and attack.</p>
+    <div class="video-grid" id="videoContainer_single_keyboard"></div>
+  </div>
+</section>
+<section class="section">
+  <div class="container is-max-desktop has-text-centered">
+    <h2 class="title is-2">Generation with Mouse Control</h2>
+    <p class="subtitle has-text-left">Matrix-Game can generate high-quality videos with fine-grained camera viewpoint control, accurately following directional inputs—including upward, downward, leftward, rightward, and diagonal perspective shifts.</p>
+    <div class="video-grid" id="videoContainer_single_mouse"></div>
+  </div>
+</section>
+<section class="section">
+  <div class="container is-max-desktop has-text-centered">
+    <h2 class="title is-2">Generation with Compound Actions</h2>
+    <p class="subtitle has-text-left">Matrix-Game is capable of generating high-quality videos that accurately follow complex action instructions.</p>
+    <div class="video-grid" id="videoContainer_dual"></div>
+  </div>
+</section>
+<section class="section">
+  <div class="container is-max-desktop has-text-centered">
+    <h2 class="title is-2">Generation with Dynamic Actions</h2>
+    <p class="subtitle has-text-left">Matrix-Game can handle dynamically changing action instructions during a single video generation process.</p>
+    <div class="video-grid" id="videoContainer_switch"></div>
+  </div>
+</section>
+<section class="section">
+  <div class="container is-max-desktop has-text-centered">
+    <h2 class="title is-2">Long Video Generation</h2>
+    <p class="subtitle has-text-left">Matrix-Game demonstrates strong auto-regressive generation capabilities for producing long videos.</p>
+    <div class="video-grid" id="videoContainer_ar"></div>
+  </div>
+</section>
+  <!-- Mouse - Single Direction -->
+<section class="section">
+  <div class="container is-max-desktop has-text-centered">
+    <h2 class="title is-2">More Game Scenarios beyond Minecraft</h2>
+    <p class="subtitle has-text-left">Our model demonstrates good potential to generalize to a broader set of game scenarios built with Unreal Engine.</p>
+    <div class="video-grid" id="videoContainer_unreal"></div>
+  </div>
+</section>
+<!-- ACK / CITATION -->
+<section class="section">
+<div class="container is-max-desktop">
+      <h2 class="title is-3">Acknowledgement</h2>
+      <div class="content has-text-justified">
+        
+        <p>We would like to express our gratitude to:</p>
+
+<ul>
+  <li><a href="https://github.com/huggingface/diffusers">Diffusers</a> for their excellent diffusion model framework</li>
+  <li><a href="https://github.com/Tencent/HunyuanVideo">HunyuanVideo</a> for their strong base model</li>
+  <li><a href="https://minedojo.org/knowledge_base">MineDojo</a> for their Minecraft video dataset</li>
+  <li><a href="https://github.com/minerllabs/minerl">MineRL</a> for their excellent gym framework</li>
+  <li><a href="https://github.com/openai/Video-Pre-Training">Video-Pre-Training</a> for their accurate Inverse Dynamics Model</li>
+  <li><a href="https://github.com/KwaiVGI/GameFactory">GameFactory</a> for their idea of action control module</li>
+</ul>
+
+<p>We are grateful to the broader research community for their open exploration and contributions to the field of interactive world generation.</p>
+</div>
+      <h2 class="title is-3">Citation</h2>
+<pre>
+<code>@article{zhang2025matrixgame,
+  title     = {Matrix-Game: Interactive World Foundation Model},
+  author    = {Yifan Zhang and Chunli Peng and Boyang Wang and Puyi Wang and Qingcheng Zhu and Zedong Gao and Eric Li and Yang Liu and Yahui Zhou},
+  journal   = {arXiv preprint arXiv:2506.18701},
+  year      = {2025}
+}</code>
+</pre>
+</div>
+</section>
+
+  <footer class="footer">
+    <div class="container"><div class="content has-text-centered">Template adapted from <a href="https://nerfies.github.io/">NERFies</a>, CC BY‑SA 4.0.</div></div>
+  </footer>
+
+  <!-- JS: Dynamic Video Loader (max 5 rows) -->
+  <script>
+  // 动态创建视频元素
+  function createVideoElement(path) {
+      const video = document.createElement('video');
+      video.controls = true;
+      video.innerHTML = `
+          <source src="${path}" type="video/mp4">
+          浏览器不支持视频播放
+      `;
+      return video;
+  }
+  const video_scenario_generation=['static/videos/report_video/output_3_65_forward_guidance_scale_6.0.mp4', 'static/videos/report_video/output_0_65_back_guidance_scale_6.0.mp4', 'static/videos/report_video/output_4_65_right_guidance_scale_6.0.mp4', 'static/videos/report_video/output_5_65_forward_guidance_scale_6.0.mp4', 'static/videos/report_video/output_8_65_attack_guidance_scale_6.0.mp4', 'static/videos/report_video/output_15_65_forward_guidance_scale_6.0.mp4', 'static/videos/report_video/output_13_65_forward_guidance_scale_6.0.mp4', 'static/videos/report_video/output_10_65_right_guidance_scale_6.0.mp4']
+  const video_single_keyboard=['static/videos/report_video/output_8_65_forward_guidance_scale_6.0.mp4', 'static/videos/report_video/output_8_65_back_guidance_scale_6.0.mp4', 'static/videos/report_video/output_8_65_left_guidance_scale_6.0.mp4', 'static/videos/report_video/output_8_65_right_guidance_scale_6.0.mp4', 'static/videos/report_video/output_8_65_attack_guidance_scale_6.0.mp4', 'static/videos/report_video/output_8_65_jump_guidance_scale_6.0.mp4']
+  const video_single_mouse=['static/videos/report_video/output_0_65_up_guidance_scale_6.0.mp4', 'static/videos/report_video/output_0_65_down_guidance_scale_6.0.mp4', 'static/videos/report_video/output_0_65_left_guidance_scale_6.0.mp4', 'static/videos/report_video/output_0_65_right_guidance_scale_6.0.mp4', 'static/videos/report_video/output_12_65_upleft_guidance_scale_6.0.mp4', 'static/videos/report_video/output_12_65_upright_guidance_scale_6.0.mp4', 'static/videos/report_video/output_12_65_downleft_guidance_scale_6.0.mp4', 'static/videos/report_video/output_12_65_downright_guidance_scale_6.0.mp4']
+  const video_switch=["static/videos/more_videos/action_switch/0005_Mix_0.mp4", "static/videos/more_videos/action_switch/0010_Mix_0.mp4", "static/videos/more_videos/action_switch/0029_Mix_0.mp4", "static/videos/more_videos/action_switch/0038_Mix_1.mp4", "static/videos/more_videos/action_switch/0048_Mix_1.mp4", "static/videos/more_videos/action_switch/0049_Mix_1.mp4", "static/videos/more_videos/action_switch/output_MC_moveAndcamera_segment_0_65_forward_guidance_scale_6.0.mp4", "static/videos/more_videos/action_switch/output_MC_moveAndcamera_segment_8_65_forward_guidance_scale_6.0.mp4"]
+  const video_ar=['static/videos/report_video/final_MC_moveAndcamera_segment_2_65_output_video_guidance_scale_6.0.mp4', 'static/videos/report_video/final_MC_moveAndcamera_segment_8_65_output_video_guidance_scale_6.0.mp4', 'static/videos/report_video/final_MC_moveAndcamera_segment_1_65_output_video_guidance_scale_6.0.mp4',"static/videos/more_videos/ar_demo/final_MC_moveAndcamera_segment_0_65_output_video_guidance_scale_6.0 (1).mp4", "static/videos/more_videos/ar_demo/final_MC_moveAndcamera_segment_2_65_output_video_guidance_scale_6.0 (1).mp4", "static/videos/more_videos/ar_demo/final_MC_moveAndcamera_segment_8_65_output_video_guidance_scale_6.0 (1).mp4", "static/videos/more_videos/ar_demo/final_MC_moveAndcamera_segment_8_65_output_video_guidance_scale_6.0 (2).mp4","static/videos/more_videos/ar_demo/final_MC_moveAndcamera_segment_11_65_output_video_guidance_scale_6.0.mp4"]
+  const video_dual=['static/videos/report_video/genie_0.45_rank_2_process_0_biome_swamp_num_72_part_0_70_forward_left.mp4', 'static/videos/report_video/output_8_65_forwardright_guidance_scale_6.0.mp4', 'static/videos/report_video/genie_0.45_rank_37_process_0_biome_extreme_hills_num_163_part_560_630_back_left.mp4', 'static/videos/report_video/output_9_65_backright_guidance_scale_6.0.mp4', 'static/videos/report_video/genie_0.45_rank_28_process_0_biome_mushroom_num_251_part_140_210_jump_attack.mp4', 'static/videos/report_video/genie_0.45_rank_22_process_0_biome_savanna_num_23_part_210_280_back_attack.mp4', 'static/videos/report_video/output_1_65_forwardjump_guidance_scale_6.0.mp4', 'static/videos/report_video/mushroom_28_forward_attack.mp4']
+  const video_unreal=['static/videos/report_video/0002_back.mp4', 'static/videos/report_video/0006_back.mp4', 'static/videos/report_video/0036_back_camera_r.mp4', 'static/videos/report_video/0103_back_right.mp4', 'static/videos/report_video/0194_forward.mp4', 'static/videos/report_video/0197_forward.mp4', 'static/videos/report_video/0282_forward_left.mp4', 'static/videos/report_video/0106_back_right.mp4',"static/videos/more_videos/unreal/0004_back.mp4", "static/videos/more_videos/unreal/0099_back_right.mp4", "static/videos/more_videos/unreal/0104_back_right.mp4", "static/videos/more_videos/unreal/0190_forward.mp4"]
+
+  async function initVideoWall() { 
+      const container = document.getElementById('videoContainer_switch');
+      video_switch.forEach(path => {
+          container.appendChild(createVideoElement(path));
+      }); 
+      const container_scenario_generation = document.getElementById('videoContainer_scenario_generation');
+      video_scenario_generation.forEach(path => {
+          console.log(path)
+          container_scenario_generation.appendChild(createVideoElement(path));
+      });
+      const container_single_keybaord = document.getElementById('videoContainer_single_keyboard');
+      video_single_keyboard.forEach(path => {
+          console.log(path)
+          container_single_keybaord.appendChild(createVideoElement(path));
+      });
+      const container_single_mouse = document.getElementById('videoContainer_single_mouse');
+      video_single_mouse.forEach(path => {
+          console.log(path)
+          container_single_mouse.appendChild(createVideoElement(path));
+      });
+      //ar 
+      const container_ar = document.getElementById('videoContainer_ar');
+      video_ar.forEach(path => {
+          container_ar.appendChild(createVideoElement(path));
+      });
+      //dual 
+      const container_dual = document.getElementById('videoContainer_dual');
+      video_dual.forEach(path => {
+          container_dual.appendChild(createVideoElement(path));
+      });
+      //unreal 
+      const container_unreal = document.getElementById('videoContainer_unreal');
+      video_unreal.forEach(path => {
+          container_unreal.appendChild(createVideoElement(path));
+      });
+      
+  }
+  // 页面加载时执行
+  window.onload = initVideoWall;
+  const MAX_ROWS = 5;
+  const SECTIONS = [
+    {id:'mouse-single', folder:'static/videos/mouse_single', order:['left','right','up','down']},
+    {id:'mouse-compound', folder:'static/videos/mouse2_single', order:['upleft','upright','downleft','downright']},
+    {id:'keyboard', folder:'static/videos/single', order:['forward','back','left','right','jump','attack']}
+  ];
+
+  async function dirList(folder){const r=await fetch(folder+'/');const txt=await r.text();const doc=new DOMParser().parseFromString(txt,'text/html');return Array.from(doc.querySelectorAll('a')).map(a=>a.getAttribute('href')).filter(h=>h.endsWith('.mp4'));}
+  function group(files){const g={};files.forEach(f=>{const m=f.match(/output_(\d+)_65_([^_]+)_/);if(!m)return;const p=m[1],a=m[2];(g[p]=g[p]||[]).push({f,a});});return g;}
+  function col(folder,f,label){return`<div class='column' style='padding:0'><video class='video' controls playsinline><source src='${folder}/${f}' type='video/mp4'></video><p class='has-text-centered is-size-7' style='margin-top:-5px'>${label}</p></div>`;}
+  function cap(s){return s.charAt(0).toUpperCase()+s.slice(1);}  
+  //console.log(dirList('static/videos/more_videos/action_switch'))
+  function render(sec,groups){const c=document.getElementById(sec.id);Object.keys(groups).sort((a,b)=>a-b).slice(0,MAX_ROWS).forEach(pref=>{let row="<div class='columns is-centered is-variable is-0'>";sec.order.forEach(act=>{const item=groups[pref].find(x=>x.a===act);if(item)row+=col(sec.folder,item.f,cap(act));});row+='</div>';c.insertAdjacentHTML('beforeend',row);});}
+  (async()=>{for(const s of SECTIONS){try{const files=await dirList(s.folder);render(s,group(files));}catch(e){console.error('load',s.folder,e);}}})();
+  </script>
+</body>
+</html>
