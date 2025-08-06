@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="description" content="Matrix-Game-Turbo: Real-Time Interactive World Foundation Model" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Matrix-Game: Interactive World Foundation Model</title>
+  <title>Matrix-Game-Turbo: Real-Time Interactive World Foundation Model</title>
 
   <!-- FONTS & STYLES -->
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans" rel="stylesheet">
@@ -19,10 +19,10 @@
   
 <section class="hero" style="background: url('static/imgs/matrixgame.png') no-repeat center center fixed; background-size: cover;">
   <div class="hero-body has-text-centered" style="background-color: rgba(255,255,255,0.85);">
-    <h1 class="title is-1">Matrix-Game:<br>Interactive World Foundation Model</h1>
+    <h1 class="title is-1">Matrix-Game-Turbo:<br>Real-Time Interactive World Foundation Model</h1>
   
     <p>
-      <strong>Yifan Zhang</strong><sup>*</sup>&nbsp;
+      <!-- <strong>Yifan Zhang</strong><sup>*</sup>&nbsp;
       <strong>Chunli Peng</strong><sup>*</sup>&nbsp; 
       <strong>Boyang Wang</strong><sup>*†</sup>&nbsp;
       <strong>Puyi Wang</strong>&nbsp;
@@ -33,7 +33,7 @@
       <strong>Zedong Gao</strong>&nbsp; 
       <strong>Eric Li</strong>&nbsp; 
       <strong>Yang Liu</strong>&nbsp; 
-      <strong>Yahui Zhou</strong>
+      <strong>Yahui Zhou</strong> -->
     </p>
     <p><em>Skywork AI</em></p>
   
@@ -63,7 +63,10 @@
     
     <!-- Abstract Text -->
     <div class="content has-text-justified">
-      We introduce Matrix-Game, an interactive world foundation model for controllable game world generation. Matrix-Game is trained using a two-stage pipeline that first performs large-scale unlabeled pretraining for environment understanding, followed by action-labeled fine-tuning for interactive video generation. To support this, we curate Matrix-Game-MC, a comprehensive Minecraft dataset comprising over 2,700 hours of unlabeled gameplay video clips and over 1,000 hours of high-quality labeled clips with fine-grained keyboard and mouse action annotations. Our model adopts an controllable image-to-world generation paradigm, conditioned on a reference image, motion frames, and user actions. With over 17 billion parameters, Matrix-Game enables precise control over character actions and camera movements, while maintaining high visual quality and temporal coherence. To evaluate performance, we propose GameWorld Score, a unified benchmark measuring visual quality, temporal quality, action controllability, and physical rule understanding. Extensive experiments show that Matrix-Game consistently outperforms prior open-source Minecraft world models—including Oasis and MineWorld—across all metrics, with particularly strong gains in controllability and 3D consistency. Human evaluations further confirm these findings, highlighting the model’s ability to produce physically grounded and perceptually realistic interactive videos in diverse scenarios.
+      
+Recent advances in interactive video generations have demonstrated their potential as world models by capturing complex physical dynamics and interactive behaviors. However, existing interactive world models are almost incapable of real-time interactive generation due to their reliance on bidirectional attention mechanisms and long inference steps, preventing the generation process from advancing in real time based solely on historical information and current actions, as the real world naturally does. To address this, we present Matrix-Game-Turbo, a real-time interactive world model that addresses these limitations through three key components: A scalable data production pipeline for Unreal Engine and GTA5 environments to effectively produce massive amounts ($\sim$ 1350 hours) of interactive video data with balanced action coverage for training our model; An action-conditioned control module allowing frame-level mouse and keyboard input as interactions; A few-step auto-regressive diffusion model for real-time, streaming video generation. 
+
+Based on these designs, Matrix-Game-Turbo generates high-quality long video generation across diverse scenes, achieving a generation speed of 25 FPS. Extensive experiments demonstrate superior action controllability and long video generation quality compared to existing methods. We open-source our model weights, codebase, and data pipeline to advance research in interactive world modeling.
     </div>
 
     <!-- Video (placed directly below abstract text) -->
