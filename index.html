@@ -88,7 +88,7 @@ Based on these designs, Matrix-Game-Turbo generates high-quality long video gene
 
     <h2 class="title is-2 has-text-centered">Model Overview</h2>
     <div class="box mt-6"> 
-      <p><strong>Matrix-Game adopts an image-to-world generation paradigm, using a single reference image as the primary prior for world understanding and video generation. To enable long-duration video generation, Matrix-Game uses an autoregressive strategy  that preserves local temporal consistency across segments, enabling the model to maintain coherent dynamics over extended time horizons.</strong></p>
+      <p><strong> The foundation model is derived from the WanX. By removing the text branch and adding action modules as in Matrix-Game V1, the model predicts next frames only from visual contents and corresponding actions.</strong></p>
       <div class="table-container">
         <img src="static/imgs/architecture.png" alt="Matrix Game" style="width: 100%; height: auto;">
       </div> 
