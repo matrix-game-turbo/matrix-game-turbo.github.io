@@ -307,7 +307,7 @@
       return video;
   }
   // 使用实际存在的视频文件，如果某些视频不存在，使用占位符或替代视频
-  const video_scenario_generation=['static/videos/matrix-game2.mp4'] // 使用实际存在的视频作为示例
+  // const video_scenario_generation=['static/videos/matrix-game2.mp4'] // 使用实际存在的视频作为示例
   const video_single_keyboard=[] // 暂时为空，因为 report_video 目录不存在
   const video_single_mouse=[] // 暂时为空，因为 report_video 目录不存在  
   const video_switch=[] // 暂时为空，因为 more_videos 目录不存在
@@ -322,7 +322,7 @@
       // Generation across Diverse Scene Styles
       const container_scenario_generation = document.getElementById('videoContainer_scenario_generation');
       if (container_scenario_generation && video_scenario_generation.length > 0) {
-          video_scenario_generation.forEach(path => {
+          video_unreal.forEach(path => {
               console.log('Scenario generation:', path)
               container_scenario_generation.appendChild(createVideoElement(path));
           });
