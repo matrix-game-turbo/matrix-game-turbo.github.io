@@ -63,9 +63,9 @@
     
     <!-- Abstract Text -->
     <div class="content has-text-justified">
-      
-Recent advances in interactive video generations have demonstrated their potential as world models by capturing complex physical dynamics and interactive behaviors. However, existing interactive world models are almost incapable of real-time interactive generation due to their reliance on bidirectional attention mechanisms and long inference steps, preventing the generation process from advancing in real time based solely on historical information and current actions, as the real world naturally does. To address this, we present Matrix-Game-Turbo, a real-time interactive world model that addresses these limitations through three key components: A scalable data production pipeline for Unreal Engine and GTA5 environments to effectively produce massive amounts ($\sim$ 1350 hours) of interactive video data with balanced action coverage for training our model; An action-conditioned control module allowing frame-level mouse and keyboard input as interactions; A few-step auto-regressive diffusion model for real-time, streaming video generation. <br>
-Based on these designs, Matrix-Game-Turbo generates high-quality long video generation across diverse scenes, achieving a generation speed of 25 FPS. Extensive experiments demonstrate superior action controllability and long video generation quality compared to existing methods. We open-source our model weights, codebase, and data pipeline to advance research in interactive world modeling.
+      We present Matrix-Game-Turbo, a real-time interactive world model for high-quality, action-conditioned video generation. Unlike previous models that struggle with real-time performance due to complex attention mechanisms and long inference steps, Matrix-Game-Turbo generates responsive video at 25 FPS, reacting to user input just like in real-world interactions.
+      <br>The system is powered by a scalable data pipeline built on Unreal Engine and GTA5, producing around 1350 hours of diverse interactive video data. It supports frame-level mouse and keyboard inputs for fine-grained control and leverages a few-step autoregressive diffusion model for fast, streaming video generation.
+      <br>Matrix-Game-Turbo achieves superior controllability and long-horizon video quality across diverse environments. We release the model weights, codebase, and data tools to support future research in interactive world modeling.
     </div>
 
     <!-- Video (placed directly below abstract text) -->
