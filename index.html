@@ -321,7 +321,7 @@
   async function initVideoWall() { 
       // Generation across Diverse Scene Styles
       const container_scenario_generation = document.getElementById('videoContainer_scenario_generation');
-      if (container_scenario_generation && video_scenario_generation.length > 0) {
+      if (container_scenario_generation && video_unreal.length > 0) {
           video_unreal.forEach(path => {
               console.log('Scenario generation:', path)
               container_scenario_generation.appendChild(createVideoElement(path));
