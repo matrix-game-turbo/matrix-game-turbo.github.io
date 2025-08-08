@@ -203,43 +203,28 @@
   <div class="container is-max-desktop has-text-centered">
     <h2 class="title is-2">Generation across GTA Scenes</h2>
     <p class="subtitle has-text-left">Matrix-Game 2.0 demonstrates the ability to generate precisely controlled videos in GTA scenarios, while also supporting a certain degree of scene dynamics.</p>
-    <div class="video-grid" id="videoContainer_single_keyboard"></div>
+    <div class="video-grid" id="videoContainer_gta"></div>
   </div>
 </section>
-<!-- <section class="section">
-  <div class="container is-max-desktop has-text-centered">
-    <h2 class="title is-2">Generation with Mouse Control</h2>
-    <p class="subtitle has-text-left">Matrix-Game 2.0 can generate high-quality videos with fine-grained camera viewpoint control, accurately following directional inputs—including upward, downward, leftward, rightward, and diagonal perspective shifts.</p>
-    <div class="video-grid" id="videoContainer_single_mouse"></div>
-  </div>
-</section>
-<section class="section">
-  <div class="container is-max-desktop has-text-centered">
-    <h2 class="title is-2">Generation with Compound Actions</h2>
-    <p class="subtitle has-text-left">Matrix-Game 2.0 is capable of generating high-quality videos that accurately follow complex action instructions.</p>
-    <div class="video-grid" id="videoContainer_dual"></div>
-  </div>
-</section>
-<section class="section">
-  <div class="container is-max-desktop has-text-centered">
-    <h2 class="title is-2">Generation with Dynamic Actions</h2>
-    <p class="subtitle has-text-left">Matrix-Game 2.0 can handle dynamically changing action instructions during a single video generation process.</p>
-    <div class="video-grid" id="videoContainer_switch"></div>
-  </div>
-</section> -->
 <section class="section">
   <div class="container is-max-desktop has-text-centered">
     <h2 class="title is-2">Long Video Generation</h2>
     <p class="subtitle has-text-left">Matrix-Game 2.0 demonstrates strong auto-regressive generation capabilities for producing long videos.</p>
-    <div class="video-grid" id="videoContainer_ar"></div>
+    <div class="video-grid" id="videoContainer_longs"></div>
   </div>
 </section>
-  <!-- Mouse - Single Direction -->
+<section class="section">
+  <div class="container is-max-desktop has-text-centered">
+    <h2 class="title is-2">Generation across MC Scenes</h2>
+    <p class="subtitle has-text-left">Our model demonstrates good potential to generalize to a broader set of game scenarios built with Unreal Engine.</p>
+    <div class="video-grid" id="videoContainer_mc"></div>
+  </div>
+</section>
 <section class="section">
   <div class="container is-max-desktop has-text-centered">
     <h2 class="title is-2">More Game Scenarios beyond Minecraft</h2>
     <p class="subtitle has-text-left">Our model demonstrates good potential to generalize to a broader set of game scenarios built with Unreal Engine.</p>
-    <div class="video-grid" id="videoContainer_unreal"></div>
+    <div class="video-grid" id="videoContainer_unreals"></div>
   </div>
 </section>
 <!-- ACK / CITATION -->
@@ -286,77 +271,55 @@
   }
   // 使用实际存在的视频文件，如果某些视频不存在，使用占位符或替代视频
   // const video_scenario_generation=['static/videos/matrix-game2.mp4'] // 使用实际存在的视频作为示例
-  const video_single_keyboard=[] // 暂时为空，因为 report_video 目录不存在
-  const video_single_mouse=[] // 暂时为空，因为 report_video 目录不存在  
-  const video_switch=[] // 暂时为空，因为 more_videos 目录不存在
-  const video_ar=[] // 暂时为空，因为 report_video 目录不存在
-  const video_dual=[] // 暂时为空，因为 report_video 目录不存在
-  const video_unreal=['static/videos/unreals/test_01.mp4', 'static/videos/unreals/test_1.mp4', 'static/videos/unreals/test_2.mp4', 'static/videos/unreals/test_5.mp4', 'static/videos/unreals/test_6.mp4', 'static/videos/unreals/test_7.mp4', 'static/videos/unreals/test_8.mp4', 'static/videos/unreals/test_10.mp4']
-
-
   const video_gta=['static/videos/gta/test_0.mp4', 'static/videos/gta/test_1.mp4', 'static/videos/gta/test_2.mp4', 'static/videos/gta/test_4.mp4', 'static/videos/gta/test_6.mp4', 'static/videos/gta/test_12.mp4', 'static/videos/gta/test_23.mp4', 'static/videos/gta/test_34.mp4']
-  
+  const video_mc=['static/videos/mc/test_15.mp4', 'static/videos/mc/test_22.mp4', 'static/videos/mc/test_29.mp4', 'static/videos/mc/test_46.mp4']
+  const video_unreals=['static/videos/unreals/test_1.mp4', 'static/videos/unreals/test_01.mp4', 'static/videos/unreals/test_2.mp4', 'static/videos/unreals/test_5.mp4', 'static/videos/unreals/test_6.mp4', 'static/videos/unreals/test_7.mp4', 'static/videos/unreals/test_8.mp4']
+  const video_longs=['static/videos/longvideos/test_0.mp4', 'static/videos/longvideos/test_1.mp4', 'static/videos/longvideos/test_2.mp4', 'static/videos/longvideos/test_5.mp4']
+  const video_templerun=['static/videos/templerun/test_0.mp4', 'static/videos/templerun/test_1.mp4', 'static/videos/templerun/test_2.mp4', 'static/videos/templerun/test_3.mp4']
+
   async function initVideoWall() { 
       // Generation across Diverse Scene Styles
       const container_scenario_generation = document.getElementById('videoContainer_scenario_generation');
-      if (container_scenario_generation && video_unreal.length > 0) {
-          video_unreal.forEach(path => {
-              console.log('Scenario generation:', path)
+      if (container_scenario_generation && video_unreals.length > 0) {
+          video_unreals.forEach(path => {
+              console.log('Scenario generation:', path);
               container_scenario_generation.appendChild(createVideoElement(path));
           });
       }
-      
-      // Generation across GTA Scenes - 使用 video_gta
+
+      // 2. GTA 场景
       const container_single_keyboard = document.getElementById('videoContainer_single_keyboard');
       if (container_single_keyboard && video_gta.length > 0) {
           video_gta.forEach(path => {
-              console.log('GTA video:', path)
+              console.log('GTA video:', path);
               container_single_keyboard.appendChild(createVideoElement(path));
           });
       }
-      
-      // // Generation with Mouse Control
-      // const container_single_mouse = document.getElementById('videoContainer_single_mouse');
-      // if (container_single_mouse && video_single_mouse.length > 0) {
-      //     video_single_mouse.forEach(path => {
-      //         console.log('Mouse control:', path)
-      //         container_single_mouse.appendChild(createVideoElement(path));
-      //     });
-      // }
-      
-      // // Generation with Compound Actions
-      // const container_dual = document.getElementById('videoContainer_dual');
-      // if (container_dual && video_dual.length > 0) {
-      //     video_dual.forEach(path => {
-      //         console.log('Dual actions:', path)
-      //         container_dual.appendChild(createVideoElement(path));
-      //     });
-      // }
-      
-      // // Generation with Dynamic Actions
-      // const container_switch = document.getElementById('videoContainer_switch');
-      // if (container_switch && video_switch.length > 0) {
-      //     video_switch.forEach(path => {
-      //         console.log('Dynamic actions:', path)
-      //         container_switch.appendChild(createVideoElement(path));
-      //     });
-      // }
-      
-      // Long Video Generation
+
+      // 3. MC 场景
+      const container_mc = document.getElementById('videoContainer_mc');
+      if (container_mc && video_mc.length > 0) {
+          video_mc.forEach(path => {
+              console.log('MC video:', path);
+              container_mc.appendChild(createVideoElement(path));
+          });
+      }
+
+      // 4. 长视频生成
       const container_ar = document.getElementById('videoContainer_ar');
-      if (container_ar && video_ar.length > 0) {
-          video_ar.forEach(path => {
-              console.log('AR video:', path)
+      if (container_ar && video_longs.length > 0) {
+          video_longs.forEach(path => {
+              console.log('Long video:', path);
               container_ar.appendChild(createVideoElement(path));
           });
       }
-      
-      // More Game Scenarios beyond Minecraft
-      const container_unreal = document.getElementById('videoContainer_unreal');
-      if (container_unreal && video_unreal.length > 0) {
-          video_unreal.forEach(path => {
-              console.log('Unreal video:', path)
-              container_unreal.appendChild(createVideoElement(path));
+
+      // 5. Temple Run 场景
+      const container_templerun = document.getElementById('videoContainer_templerun');
+      if (container_templerun && video_templerun.length > 0) {
+          video_templerun.forEach(path => {
+              console.log('TempleRun video:', path);
+              container_templerun.appendChild(createVideoElement(path));
           });
       }
       

@@ -47,13 +47,15 @@ def main():
     # 如果还有其他目录，也可以一并生成
     other_directories = [
         ("static/videos/mc", "video_mc"),
-        ("static/videos/unreals", "video_unreals")
+        ("static/videos/unreals", "video_unreals"), 
+        ("static/videos/longvideos", "video_longs"), 
+        ("static/videos/templerun", "video_templerun"), 
     ]
     
     for dir_path, var_name in other_directories:
         if os.path.exists(dir_path):
             array_str = generate_video_array(dir_path, var_name)
-            print(f"{dir_path} 视频文件数组：")
+            # print(f"{dir_path} 视频文件数组：")
             print(array_str)
             print()
 
