@@ -63,10 +63,23 @@
     
     <!-- Abstract Text -->
     <div class="content has-text-justified">
-      We present Matrix-Game 2.0, a real-time interactive world model for high-quality, action-conditioned video generation. Unlike previous models that struggle with real-time performance due to complex attention mechanisms and long inference steps, Matrix-Game 2.0 generates responsive video at 25 FPS, reacting to user input just like in real-world interactions.
-      <br>The system is powered by a scalable data pipeline built on Unreal Engine and GTA5, producing around 1350 hours of diverse interactive video data. It supports frame-level mouse and keyboard inputs for fine-grained control and leverages a few-step autoregressive diffusion model for fast, streaming video generation.
-      <br>Matrix-Game 2.0 achieves superior controllability and long-horizon video quality across diverse environments. We release the model weights, codebase, and data tools to support future research in interactive world modeling.
-    </div>
+      Recent advances in interactive video generations have demonstrated diffusion
+      model’s potential as world models by capturing complex physical dynamics and
+      interactive behaviors. However, existing interactive world models depend on
+      bidirectional attention and lengthy inference steps, severely limiting real-time per-
+      formance. Consequently, they are hard to simulate real-world dynamics, where
+      outcomes must update instantaneously based on historical context and current
+      actions. To address this, we present Matrix-Game 2.0, an interactive world model
+      generates long videos on-the-fly via few-step auto-regressive diffusion. Our frame-
+      work consists of three key components: (1) A scalable data production pipeline for
+      Unreal Engine and GTA5 environments to effectively produce massive amounts (∼
+      1350 hours) of interactive video data; (2) An action injection module that enables
+      frame-level mouse and keyboard input as interactions; (3) A few-step distillation for
+      real-time, streaming video generation. Matrix-Game 2.0 can generate high-quality
+      minute-level videos across diverse scenes at an ultra-fast speed of 25 FPS. We
+      open-source our model weights, codebase, and data production pipeline to advance
+      research in interactive world modeling.
+      </div>
 
     <!-- Video (placed directly below abstract text) -->
     <div style="margin-top: 2rem;">
