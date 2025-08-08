@@ -288,11 +288,11 @@
       }
 
       // 2. GTA 场景
-      const container_single_keyboard = document.getElementById('videoContainer_single_keyboard');
-      if (container_single_keyboard && video_gta.length > 0) {
+      const container_gta = document.getElementById('videoContainer_gta');
+      if (container_gta && video_gta.length > 0) {
           video_gta.forEach(path => {
               console.log('GTA video:', path);
-              container_single_keyboard.appendChild(createVideoElement(path));
+              container_gta.appendChild(createVideoElement(path));
           });
       }
 
@@ -306,11 +306,11 @@
       }
 
       // 4. 长视频生成
-      const container_ar = document.getElementById('videoContainer_ar');
-      if (container_ar && video_longs.length > 0) {
+      const container_lv = document.getElementById('videoContainer_longs');
+      if (container_lv && video_longs.length > 0) {
           video_longs.forEach(path => {
               console.log('Long video:', path);
-              container_ar.appendChild(createVideoElement(path));
+              container_lv.appendChild(createVideoElement(path));
           });
       }
 
