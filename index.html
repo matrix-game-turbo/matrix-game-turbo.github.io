@@ -259,10 +259,8 @@
 
   <!-- JS: Dynamic Video Loader (max 5 rows) -->
   <script>
-  // 动态创建视频元素（简化版本）
+  // 动态创建视频元素
   function createVideoElement(path) {
-      console.log('创建视频元素:', path);
-      
       const video = document.createElement('video');
       video.controls = true;
       video.preload = 'metadata';
@@ -270,25 +268,41 @@
       video.style.height = 'auto';
       video.style.borderRadius = '8px';
       video.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
-      video.src = path;
       
-      // 添加基本错误处理
+      // 创建source元素以确保更好的兼容性
+      const source = document.createElement('source');
+      source.src = path;
+      source.type = 'video/mp4';
+      video.appendChild(source);
+      
+      // 添加错误处理
       video.addEventListener('error', function(e) {
-          console.error('视频加载失败:', path, e);
-          if (video.error) {
-              console.error('错误详情:', {
-                  code: video.error.code,
-                  message: video.error.message || '未知错误'
-              });
-          }
+          console.error('视频加载失败:', path);
+          // 在视频位置显示错误信息
+          const errorDiv = document.createElement('div');
+          errorDiv.style.cssText = `
+              background: #f8d7da;
+              border: 1px solid #f5c6cb;
+              border-radius: 8px;
+              padding: 20px;
+              text-align: center;
+              color: #721c24;
+              min-height: 200px;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+          `;
+          errorDiv.innerHTML = `
+              <i class="fas fa-exclamation-triangle" style="font-size: 24px; margin-bottom: 10px;"></i><br>
+              <strong>视频加载失败</strong><br>
+              <small>${path}</small>
+          `;
+          video.parentNode.replaceChild(errorDiv, video);
       });
       
       video.addEventListener('loadedmetadata', function() {
-          console.log('视频元数据加载成功:', path);
-      });
-      
-      video.addEventListener('canplay', function() {
-          console.log('视频可以播放:', path);
+          console.log('视频加载成功:', path);
       });
       
       return video;
@@ -300,87 +314,50 @@
   const video_longs=['static/videos/longvideos/long1.mp4', 'static/videos/longvideos/long2.mp4', 'static/videos/longvideos/long3.mp4', 'static/videos/longvideos/long4.mp4']
   const video_templerun=['static/videos/templerun/temple1.mp4', 'static/videos/templerun/temple2.mp4', 'static/videos/templerun/temple3.mp4', 'static/videos/templerun/temple4.mp4']
   
-  // 验证视频文件是否存在（简化版本）
-  async function checkVideoExists(path) {
-      try {
-          console.log('正在检查视频文件:', path);
-          const response = await fetch(path, { method: 'HEAD' });
-          console.log('检查结果:', path, 'Status:', response.status, 'OK:', response.ok);
-          return response.ok;
-      } catch (error) {
-          console.error('检查视频文件失败:', path, error);
-          return false;
-      }
-  }
-
-  // 加载单个视频容器的视频
-  async function loadVideosToContainer(containerId, videos, sectionName) {
-      const container = document.getElementById(containerId);
-      if (!container) {
-          console.warn(`容器 ${containerId} 未找到`);
-          return;
-      }
-      
-      if (!videos || videos.length === 0) {
-          console.warn(`${sectionName} 视频数组为空`);
-          return;
-      }
-      
-      console.log(`开始加载 ${sectionName} 视频，数量:`, videos.length);
-      
-      for (const path of videos) {
-          try {
-              console.log(`正在加载 ${sectionName} 视频:`, path);
-              
-              // 暂时跳过文件检查，直接创建视频元素
-              const videoElement = createVideoElement(path);
-              container.appendChild(videoElement);
-              
-              // 添加小延迟，避免同时加载过多视频
-              await new Promise(resolve => setTimeout(resolve, 100));
-              
-          } catch (error) {
-              console.error(`加载视频时出错 ${path}:`, error);
-              
-              // 如果创建视频元素失败，显示错误占位符
-              const errorElement = document.createElement('div');
-              errorElement.style.backgroundColor = '#fff3cd';
-              errorElement.style.border = '1px solid #ffeaa7';
-              errorElement.style.borderRadius = '8px';
-              errorElement.style.padding = '20px';
-              errorElement.style.textAlign = 'center';
-              errorElement.style.color = '#856404';
-              errorElement.innerHTML = `
-                  <i class="fas fa-exclamation-triangle" style="font-size: 24px; margin-bottom: 10px;"></i><br>
-                  <strong>视频加载出错</strong><br>
-                  <small>${path}</small><br>
-                  <small>${error.message}</small>
-              `;
-              container.appendChild(errorElement);
-          }
-      }
-      
-      console.log(`${sectionName} 视频加载完成`);
-  }
-
-  async function initVideoWall() { 
+  function initVideoWall() { 
       console.log('开始初始化视频墙...');
       
-      try {
-          // 并行加载所有视频容器
-          await Promise.all([
-              loadVideosToContainer('videoContainer_unreals', video_unreals, 'Unreal场景'),
-              loadVideosToContainer('videoContainer_gta', video_gta, 'GTA场景'),
-              loadVideosToContainer('videoContainer_mc', video_mc, 'MC场景'),
-              loadVideosToContainer('videoContainer_longs', video_longs, '长视频'),
-              loadVideosToContainer('videoContainer_templerun', video_templerun, 'TempleRun场景')
-          ]);
+      // 定义所有视频容器和对应的视频数组
+      const sections = [
+          { containerId: 'videoContainer_unreals', videos: video_unreals, name: 'Unreal场景' },
+          { containerId: 'videoContainer_gta', videos: video_gta, name: 'GTA场景' },
+          { containerId: 'videoContainer_mc', videos: video_mc, name: 'MC场景' },
+          { containerId: 'videoContainer_longs', videos: video_longs, name: '长视频' },
+          { containerId: 'videoContainer_templerun', videos: video_templerun, name: 'TempleRun场景' }
+      ];
+      
+      sections.forEach(section => {
+          const container = document.getElementById(section.containerId);
+          if (!container) {
+              console.warn(`容器 ${section.containerId} 未找到`);
+              return;
+          }
           
-          console.log('视频墙初始化完成！');
+          if (!section.videos || section.videos.length === 0) {
+              console.warn(`${section.name} 视频数组为空`);
+              return;
+          }
           
-      } catch (error) {
-          console.error('视频墙初始化过程中出错:', error);
-      }
+          console.log(`正在加载 ${section.name}，共 ${section.videos.length} 个视频`);
+          
+          // 清空容器内容
+          container.innerHTML = '';
+          
+          // 为每个视频创建元素
+          section.videos.forEach((path, index) => {
+              try {
+                  const videoElement = createVideoElement(path);
+                  container.appendChild(videoElement);
+                  console.log(`已添加 ${section.name} 视频 ${index + 1}: ${path}`);
+              } catch (error) {
+                  console.error(`创建视频元素失败 ${path}:`, error);
+              }
+          });
+          
+          console.log(`${section.name} 加载完成`);
+      });
+      
+      console.log('视频墙初始化完成！');
   }
   // 全局调试函数
   window.debugVideoWall = function() {
@@ -413,21 +390,9 @@
   // 页面加载时执行
   window.onload = function() {
       console.log('页面加载完成，开始初始化视频墙...');
-      initVideoWall().then(() => {
-          console.log('初始化完成，可以使用 debugVideoWall() 查看调试信息');
-      });
+      initVideoWall();
+      console.log('初始化完成，可以使用 debugVideoWall() 查看调试信息');
   };
-  const MAX_ROWS = 5;
-  // 移除了不存在的视频文件夹配置
-  const SECTIONS = [];
-
-  async function dirList(folder){const r=await fetch(folder+'/');const txt=await r.text();const doc=new DOMParser().parseFromString(txt,'text/html');return Array.from(doc.querySelectorAll('a')).map(a=>a.getAttribute('href')).filter(h=>h.endsWith('.mp4'));}
-  function group(files){const g={};files.forEach(f=>{const m=f.match(/output_(\d+)_65_([^_]+)_/);if(!m)return;const p=m[1],a=m[2];(g[p]=g[p]||[]).push({f,a});});return g;}
-  function col(folder,f,label){return`<div class='column' style='padding:0'><video class='video' controls playsinline><source src='${folder}/${f}' type='video/mp4'></video><p class='has-text-centered is-size-7' style='margin-top:-5px'>${label}</p></div>`;}
-  function cap(s){return s.charAt(0).toUpperCase()+s.slice(1);}  
-  //console.log(dirList('static/videos/more_videos/action_switch'))
-  function render(sec,groups){const c=document.getElementById(sec.id);Object.keys(groups).sort((a,b)=>a-b).slice(0,MAX_ROWS).forEach(pref=>{let row="<div class='columns is-centered is-variable is-0'>";sec.order.forEach(act=>{const item=groups[pref].find(x=>x.a===act);if(item)row+=col(sec.folder,item.f,cap(act));});row+='</div>';c.insertAdjacentHTML('beforeend',row);});}
-  (async()=>{for(const s of SECTIONS){try{const files=await dirList(s.folder);render(s,group(files));}catch(e){console.error('load',s.folder,e);}}})();
   </script>
 </body>
 </html>
