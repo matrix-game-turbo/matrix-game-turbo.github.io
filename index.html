@@ -17,31 +17,38 @@
 </head>
 <body>
   
-<section class="hero" style="background: url('static/imgs/matrix-2.0.jpeg') no-repeat center center fixed; background-size: cover;">
+<section class="hero" style="background: url('static/imgs/cover.png') no-repeat center center fixed; background-size: cover;">
   <div class="hero-body has-text-centered" style="background-color: rgba(255,255,255,0.85);">
-    <h1 class="title is-1">Matrix-Game 2.0:<br>An Open-Source, Real-Time, and Streaming Interactive World Model</h1>
+    <h1 class="title is-1">Matrix-Game 2.0:<br>An Open-Source, Real-Time, and Streaming<br> Interactive World Model</h1>
   
     <p>
-      <!-- <strong>Yifan Zhang</strong><sup>*</sup>&nbsp;
+      <strong>Xianglong He</strong><sup>*</sup>&nbsp;
       <strong>Chunli Peng</strong><sup>*</sup>&nbsp; 
+      <strong>Zexiang Liu</strong><sup>*</sup>&nbsp; 
       <strong>Boyang Wang</strong><sup>*†</sup>&nbsp;
-      <strong>Puyi Wang</strong>&nbsp;
-      <strong>Qingcheng Zhu</strong>&nbsp;
-      <strong>Fei Kang</strong><br>
+      <strong>Yifan Zhang</strong><br>
+      <strong>Qi Cui</strong>&nbsp;
+      <strong>Fei Kang</strong>&nbsp;
       
       <strong>Biao Jiang</strong>&nbsp;
-      <strong>Zedong Gao</strong>&nbsp; 
-      <strong>Eric Li</strong>&nbsp; 
-      <strong>Yang Liu</strong>&nbsp; 
-      <strong>Yahui Zhou</strong> -->
+      <strong>Mengyin An</strong>&nbsp; 
+      <strong>Yangyang Ren</strong>&nbsp; 
+      <strong>Baixin Xu</strong><br>
+      <strong>Haoxiang Guo</strong>&nbsp; 
+
+      <strong>Kaixiong Gong</strong>&nbsp; 
+      <strong>Xuchen Song</strong>&nbsp; 
+      <strong>Yang Liu</strong><sup>‡</sup>&nbsp; 
+      <strong>Eric Li</strong><sup>‡</sup>&nbsp; 
+      <strong>Yahui Zhou</strong>
     </p>
     <p><em>Skywork AI</em></p>
   
     <p style="margin-top:1rem;">
-      <a href="#" class="button is-dark is-small is-rounded">
+      <a href="https://github.com/SkyworkAI/Matrix-Game/blob/main/Matrix-Game-2/assets/pdf/report.pdf" class="button is-dark is-small is-rounded">
         <span class="icon"><i class="ai ai-arxiv"></i></span><span>Technical Report</span>
       </a>
-      <a href="https://github.com/SkyworkAI/Matrix-Game-2.0" class="button is-dark is-small is-rounded">
+      <a href="https://github.com/SkyworkAI/Matrix-Game/tree/main/Matrix-Game-2" class="button is-dark is-small is-rounded">
         <span class="icon"><i class="fab fa-github"></i></span><span>GitHub</span>
       </a>
       <a href="https://huggingface.co/Skywork/Matrix-Game-2.0" class="button is-dark is-small is-rounded">
@@ -63,19 +70,19 @@
       Recent advances in interactive video generations have demonstrated diffusion
       model’s potential as world models by capturing complex physical dynamics and
       interactive behaviors. However, existing interactive world models depend on
-      bidirectional attention and lengthy inference steps, severely limiting real-time per-
-      formance. Consequently, they are hard to simulate real-world dynamics, where
+      bidirectional attention and lengthy inference steps, severely limiting real-time performance.
+      Consequently, they are hard to simulate real-world dynamics, where
       outcomes must update instantaneously based on historical context and current
       actions. To address this, we present Matrix-Game 2.0, an interactive world model
-      generates long videos on-the-fly via few-step auto-regressive diffusion. Our frame-
-      work consists of three key components: (1) A scalable data production pipeline for
+      generates long videos on-the-fly via few-step auto-regressive diffusion. Our framework
+      consists of three key components: (1) A scalable data production pipeline for
       Unreal Engine and GTA5 environments to effectively produce massive amounts (∼
-      1350 hours) of interactive video data; (2) An action injection module that enables
-      frame-level mouse and keyboard input as interactions; (3) A few-step distillation for
-      real-time, streaming video generation. Matrix-Game 2.0 can generate high-quality
-      minute-level videos across diverse scenes at an ultra-fast speed of 25 FPS. We
-      open-source our model weights, codebase, and data production pipeline to advance
-      research in interactive world modeling.
+      1200 hours) of interactive video data; (2) An action injection module that enables
+      frame-level mouse and keyboard input as interactions; (3) A few-step distillation
+      based on the casual architecture for real-time, streaming video generation. <strong>Matrix-Game
+      2.0 can generate high-quality minute-level videos across diverse scenes at
+      an ultra-fast speed of 25 FPS.</strong> We open-source our model weights and codebase to
+      advance research in interactive world modeling.
       </div>
 
     <!-- Video (placed directly below abstract text) -->
@@ -97,7 +104,7 @@
 
     <h2 class="title is-2 has-text-centered">Model Overview</h2>
     <div class="box mt-6"> 
-      <p><strong> The foundation model is derived from the Wan. By removing the text branch and adding action modules, the model predicts next frames only from visual contents and corresponding actions.</strong></p>
+      <p><strong> The foundation model is derived from WanX. By removing the text branch and adding action modules, the model predicts next frames only from visual contents and corresponding actions.</strong></p>
       <div class="table-container">
         <img src="static/imgs/architecture.png" alt="Matrix Game" style="width: 100%; height: auto;">
       </div> 
@@ -142,7 +149,7 @@
     <!-- GameWorld Score Benchmark -->
     <div class="box">
       <h3 class="title is-4"> GameWorld Score Benchmark Comparison</h3>
-      <p><strong>Matrix-Game 2.0 achieves consistently best performance on the GameWorld Score benchmark.</strong></p>
+      <p><strong>Matrix-Game 2.0 achieves excellent performance on the GameWorld Score benchmark in Minecraft scenes.</strong></p>
       <div class="table-container">
         <table class="table is-fullwidth is-hoverable">
           <thead>
@@ -239,13 +246,14 @@
   <li><a href="https://github.com/minerllabs/minerl">MineRL</a> for their excellent gym framework</li>
   <li><a href="https://github.com/openai/Video-Pre-Training">Video-Pre-Training</a> for their accurate Inverse Dynamics Model</li>
   <li><a href="https://github.com/KwaiVGI/GameFactory">GameFactory</a> for their idea of action control module</li>
+  <li><a href="https://github.com/madebyollin/taehv/">TAEHV-VAE</a> for their excellent work for accelerating VAE decoding</li>
 </ul>
 
 <p>We are grateful to the broader research community for their open exploration and contributions to the field of interactive world generation.</p>
-</div>
+<!-- </div>
       <h2 class="title is-3">Citation</h2>
 <pre>
-<code>xxxxx</code>
+<code>xxxxx</code> -->
 </pre>
 </div>
 </section>
